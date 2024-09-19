@@ -1,5 +1,5 @@
 """Code to find a pokemon and give all it's attributes, abilities etc"""
-
+from poketeambuild.move_info import Move
 import requests
 
 class Pokemon():
@@ -21,7 +21,7 @@ class Pokemon():
             # Change this to be something different but that will need to reply on upstream
             return None, None, None
         
-        info = r.json()
-        moves = [i["move"] for i in info['moves']]
+        info = r.json()        
+        moves = [Move(i["move"]['name']) for i in info['moves']]
         
         return info['stats'], info['types'], moves

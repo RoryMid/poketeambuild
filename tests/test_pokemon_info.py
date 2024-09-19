@@ -1,6 +1,5 @@
 """Test pokemon_info file and functions within it"""
 from poketeambuild.pokemon_info import Pokemon
-import pytest, requests
 
 # Lets test with Haunter! Add the odd capital etc
 haunter = Pokemon(name = "HaUnter")
