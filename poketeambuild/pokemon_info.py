@@ -6,6 +6,7 @@ class Pokemon():
     def __init__(self, name = str) -> None:
         # On initialisation the user will give a pokemon name which we then use to get all the info
         self.name = name.lower()
+        self.stats, self.types, self.moves = self.get_pokemon_info()
     
     def whoami(self):
         return self.name
@@ -16,6 +17,11 @@ class Pokemon():
             r = requests.get(f'https://pokeapi.co/api/v2/pokemon/{self.name}')
             r.raise_for_status()
         except requests.exceptions.HTTPError as e:
-            raise e
-        # TODO maybe add in if it is empty and do manual break out for that
-        return r.json()
+            # The only error handling that we want to do is if there is a misspelling 
+            # Change this to be something different but that will need to reply on upstream
+            return None, None, None
+        
+        info = r.json()
+        moves = [i["move"] for i in info['moves']]
+        
+        return info['stats'], info['types'], moves
